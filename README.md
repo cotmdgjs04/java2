@@ -64,8 +64,7 @@
 
 ## 코드 수정 후 업로드 정리
 
-```
-git add .
+```git add .
 git commit -m "수정 이유"
 git push
 ```
