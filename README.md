@@ -10,8 +10,10 @@
 
 ### Branch 
 - 독립적인 작업 공간
+
 ---
 
+## 처음 설정
 ### git init 
 - git 초기화
 - 현재 폴더를 Git 프로젝트로 만들기
@@ -25,3 +27,47 @@
 ### 둘의 차이
 - git add 특정 파일 **(특정 파일에만 추가)**
 - git add . **(모든 파일에 추가)**
+
+---
+
+## 첫 커밋 만들기
+### git commit -m "first commit"
+- 현재 상태를 첫 저장
+
+---
+
+## Main branch 설정
+### git branch -M main
+- 기본 브랜치를 main 으로 변경
+
+---
+
+## 이름, 이메일 설정
+### git config --global user.name "이름"
+- 처음 git을 사용할 때 이름 설정
+- 만약 프로젝트마다 다른 이름으로 하고싶다면 --global 빼기
+
+### git config --global user.email "이메일"
+- 처음 git을 사용할 때 이메일 설정
+- 만약 프로젝트마다 다른 이메일로 하고싶다면 --global 빼기
+
+---
+
+## Github 저장소 연결
+### git remote add origin 깃주소
+- 원격 저장소 연결
+
+## Github로 업로드
+### git push -u origin main(브랜치 이름)
+
+---
+
+## 코드 수정 후 업로드 정리
+
+```
+git add .
+git commit -m "수정 이유"
+git push
+```
+
+### 직접 수정 이유를 적고 커밋 버튼을 누르고 업로드도 가능
