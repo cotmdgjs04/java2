@@ -16,6 +16,12 @@
 - git 초기화
 - 현재 폴더를 Git 프로젝트로 만들기
 
-### echo "# java2" >> README.md
-- README.md 파일 생성
+### git add 특정 파일
+- 특정 파일을 Git이 추적하도록 추가(스테이징)
 
+### git add .
+- 현재 폴더의 모든 파일을 Git에 추가
+
+### 둘의 차이
+- git add 특정 파일 (특정 파일에만 추가)
+- git add . (모든 파일에 추가)
