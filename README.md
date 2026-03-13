@@ -38,6 +38,11 @@
 
 ---
 
+## git clone 깃주소
+- 원격 저장소 복제
+
+---
+
 ## Main branch 설정
 ### git branch -M main
 - 기본 브랜치를 main 으로 변경
