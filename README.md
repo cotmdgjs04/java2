@@ -1,8 +1,11 @@
 # JAVA2
 # 202330231 채승헌
 
+---
+
+
 ## 2주차
-# Github 용어
+## Github 용어
 
 ---
 
@@ -108,3 +111,11 @@ git commit -m "수정 이유"
 git push
 ```
 ---
+---
+
+## 3주차
+# Java Project 생성
+
+---
+
+java
