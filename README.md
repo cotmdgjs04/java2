@@ -111,9 +111,9 @@ git push
 - 여러 줄 코드
 - 예시
 
-```diff
-- git add .
-+ git commit -m "수정 이유"
+```bash
+git add .
+git commit -m "수정 이유"
 git push
 ```
 ---
