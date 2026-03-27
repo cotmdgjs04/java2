@@ -493,3 +493,143 @@ byte b = n;  // 컴파일 오류. int 타입은 byte 타입으로 자동 변환 
 
 ---
 
+### 코드
+### Foo.java
+
+```bash
+/*  예제 2-1 : Hello.java
+* Hello.java는 두 정수를 더하는 sum()함수를 정의,
+* main() 함수에서 이 함수를 호출하여 결과를 출력하는 예제
+*/
+public class Foo {
+    // 두 정수를 더하는 메소드
+    public static int sum(int n, int m) {
+        return n + m;
+    }
+
+    // main() 메소드에서 실행 시작 
+    public static void main(String[] args) {
+        int i = 20; // i 에 20 저장
+        int s;
+        char a;
+
+        s = sum(i,10);                    // 메소드 호출
+        a = '?';   
+        System.out.println(a);              // 문자 '?' 출력
+        System.out.println("Hello");     // "Hello" 문자열 출력
+        System.out.println(s);             // 정수 s 값 30 출력
+    }
+}
+
+```
+
+#### 결과
+```
+?
+Hello
+30
+```
+
+---
+
+### Bar.java
+```bash
+// 예제 2-3 : Bar.java는 상수를 사용하여 원의 면적을 계산하는 예제 
+
+public class Bar {
+    public static void main(String[] args) {
+        final double PI = 3.14;  // 원주율을 상수로 선언
+        double radius = 10.2;    // 원의 반지름
+        double circleArea = radius*radius*PI;  // 원의 면적 계산
+
+        // 원의 면적을 화면에 출력한다.
+        System.out.print("반지름 " + radius + ", ");
+        System.out.println("원의 면적");
+        System.out.println("원의 면적 =" + circleArea);
+    }
+}
+```
+#### 실행
+```
+반지름 10.2, 원의 면적
+원의 면적 =326.68559999999997
+```
+
+---
+
+### Hun.java
+```bash
+// 예제 2-4 : 타입 변환
+
+public class Hun {
+    public static void main(String[] args) {
+        byte b = 127;
+        int i = 100;
+        System.out.println(b+i);    // b 가 int 타입으로 자동 변환
+        System.out.println(10/4);
+        System.out.println(10.0/4); // 4가 4.0으로 자동 변환
+        System.out.println((char)0x12340041); 
+        System.out.println((byte)(b+i));
+        System.out.println((int)2.9 +1.8);
+        System.out.println((int)(2.9 + 1.8));
+        System.out.println((int)2.9 + (int)1.8);
+    }
+}
+```
+#### 실행
+```bash
+227
+2
+2.5
+A
+-29
+3.8
+4
+3
+```
+
+---
+
+### Boo.java
+```bash
+// 예제 2-5 : Scanner를 이용한 키 연습
+
+import java.util.Scanner;       // import로 불러오기
+
+public class Boo {
+    public static void main(String[] args) {
+        System.out.println("이름, 도시, 나이, 체중, 독신 여부를 빈칸으로 분리하여 입력하세요.");
+
+        Scanner scanner = new Scanner(System.in);    // 객체 생성할 때 new 키워드로, 객체는 소문자, 클래스는 대문자 시작
+        String name = scanner.next(); // 문자열 토큰 읽기
+        System.out.println("당신의 이름은 " + name + "입니다.");
+        String city = scanner.next(); // 문자열 토큰 읽기
+        System.out.println("당신이 사는 도시는 " + city + "입니다.");
+        int age = scanner.nextInt(); // 정수 토큰 읽기
+        System.out.println("당신의 나이는 " + age + "살입니다.");
+        double weight = scanner.nextDouble(); // 실수 토큰 읽기
+        System.out.println("당신의 체중은 " + weight + "kg입니다.");
+        boolean single = scanner.nextBoolean(); // 논리 토큰 읽기
+        System.out.println("당신은 독신 여부는 " + single + "입니다.");
+
+        scanner.close(); // scanner 스트림 닫기
+
+
+    }
+    
+}
+```
+
+#### 실행
+```bash
+이름, 도시, 나이, 체중, 독신 여부를 빈칸으로 분리하여 입력하세요.
+hun seoul 23 68.5 false
+당신의 이름은 hun입니다.       
+당신이 사는 도시는 seoul입니다.
+당신의 나이는 23살입니다.      
+당신의 체중은 68.5kg입니다.
+당신은 독신 여부는 false입니다.
+```
+
+---
+

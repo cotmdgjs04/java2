@@ -10,7 +10,7 @@ public class Foo {
 
     // main() 메소드에서 실행 시작 
     public static void main(String[] args) {
-        int i = 20;
+        int i = 20; // i 에 20 저장
         int s;
         char a;
 
