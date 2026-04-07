@@ -633,3 +633,515 @@ hun seoul 23 68.5 false
 
 ---
 
+## 5주차
+## 조건 연산
+- 3개의 피연산자로 구성
+- 삼항 연산자
+- opr1 ? opr2: opr3 -> opr1이 결과가 true 이면 opr2, false 면 opr3
+
+```bash
+int x=5, y=3;
+int big = (x>y)?x:y // x 가 y 보다 크기 때문에 x 값 5가 big 에 대입
+```
+
+---
+
+## 비트 연산
+- 하으웨어 프로그래밍 뿐만 아니라 일반 소프트웨어 개발에서도 여러 가지 용도로 사용됨
+- 성능이 중요한 경우나 최적화가 필요한 경우에 많이 활용됨
+1. 성능 최정화 및 연산 속도 향상 : 곱셈(*)과 나눗셈(/)보다 비트 연산(<<, >>)이 훨씬 빠름
+```bash
+int x = 5;
+int result = x << 1;     // 5 * 2 = 10
+System.out.println(result);    // 10
+```
+
+2. 권한 및 플래그 설정(비트 마스크) : 여러개의 상태(flag)를 하나의 int 변수에 저장할 때 사용
+```bash
+class Permissions {
+    static final int READ = 1;     // 0001
+    static final int WRITE = 2;    // 0010
+    static final int EXEC = 4;     // 0100
+}
+```
+
+```bash
+int userPermissions = Permissions.READ | Permissions.WRITE;     // 0011 (3)
+
+// 특정 권한 확인
+boolean canWrite = (userPermissions & Permissions.WRITE) ! = 0;
+System.out.println("Can Write: " + canWrite); // true
+```
+---
+
+## 조건문
+## 단순 if 문
+- if의 괄호 안에 조건식(논리형 변수나 논리 연산)
+- 실행문장이 단일 문장인 경우 둘러싸는 {,} 생략 가능
+```bash
+if(조건식) {
+    ...실행 문장... // 조건식이 참인 경우
+}
+```
+
+## if-else문
+- 조건식이 true면 실행문장1, false이면 실행문장 2 실행
+```bash
+if(조건식) {
+    ...실행 문장1... // 조건식이 참인 경우
+}
+else {
+    ...실행 문장2... // 조건식이 거짓인 경우
+}
+```
+
+## 다중 if-else문
+- 조건문이 너무 많은 경우, swich 문 사용 권장
+```bash
+if(조건식 1) {
+    실행 문장  1; // 조건식 1이 참인 경우
+}
+else if(조건식 2) {
+    실행 문장 2; // 조건식 2가 참인 경우
+}
+else if(조건식 m) {
+    .............. // 조건식 m이 참인 경우
+}
+else {
+    실행 문장 n; // 앞의 모든 조건이 거짓인 경우
+}
+```
+
+---
+
+## switch문
+- Switch문의 식과 case 문의 값과 비교
+- case의 비교 값과 일치하면 해당 case의 실행문장 수행
+- break를 만나면 switch문을 벗어남
+- case의 비교 값과 일치하는 것이 없으면 default 문 실행
+- default문은 생략 가능
+```bash
+switch(식) {
+    case 값1: // 식의 결과가 값1과 같을 때
+        실행 문장1;
+        break;
+    case 값2: // 식의 결과가 값2와 같을 때
+        실행 문장2;
+        break;
+    ...
+    case 값m:
+        실행 문장 m; // 식의 결과가 값m과 같을 때
+        break;
+    default:  // 어느 것과도 같지 않을 때
+        실행 문장 n;
+}
+```
+## switch문에서 break문의 역할
+- break문을 만나면 switch문 벗어남
+- case 문에 break문이 없다면, 다음 ``case문`` 계속 실행
+- 언젠가 ``break를 만날 때까지`` 계속 내려 가면서 실행
+
+## case문의 값
+- ``문자, 정수, 문자열 리터럴``(JDK 1.7부터)만 허용
+- 실수 리터럴은 허용되지 않음
+
+---
+
+## 반복문
+## for문
+- for문이 반복되는 동안 매번 실행
+- 작업문이 하나의 문장인 경우 ``중괄호({})``가 필요 없음
+- 초기문에서는 대개 for 문의 조건식에서 사용하는 변수를 ``초기화``함
+- 초기문에는 지역 변수를 선언하고 바로 사용 가능
+```bash
+for(초기문(1번); 조건식(2번); 반복 후 작업(4번)){
+    ..작업문(3번)..
+}
+```
+
+## while문
+- true인 경우 반복이 계속되며, false인 경우 while문을 벗어남
+- for문과 달리 조건식이 없으면 컴파일 오류가 발생
+```bash
+while(조건식(1번)) {
+    ..작업문(2번)..
+}
+```
+
+## do-while문
+- 조건식은 while문과 동일하며 조건식이 없으면 컴파일 오류 발생
+- 작업문 실행 후 반복 조건을 따지므로, 작업문이 ``최초 한번``은 반드시 ``실행``
+```bash
+do {
+    ..작업문(1번)..
+} while(조건식(2번));
+```
+
+## 중첩 반복
+- 반복문이 다른 반복문을 내포하는 구조
+- 몇 번이고 중첩이 가능하나 너무 많은 중첩 반복은 프로그램 구조를 복잡하게 하므로 2중 또는 3중 반복 정도가 적당
+
+---
+
+## continue문
+- 반복문을 빠져 나가지 않고, 다음 반복으로 제어 변경
+- 반복문에서 continue; 문에 의한 분기
+
+## break문
+- 반복문 하나를 ``즉시`` 벗어날 때 사용. 하나의 반복문만 벗어남
+- 중첩 반복의 경우 안쪽 반복문의 break문이 실행되면 안쪽 반복문만 벗어남
+
+---
+
+## 자바 배열(array)
+- 인덱스와 인덱스에 대응하는 데이터들로 이루어진 자료 구조로 ``한번에 많은 메모리 공간`` 선언
+- 같은 타입의 데이터들이 순차적으로 저장되는 공간으로 ``인덱스``를 이용하여 원소 데이터 접근
+- 반복문을 이용하여 처리하기에 적합한 자료
+- 배열 인덱스 : ``0부터`` 시작
+
+## 배열 선언 및 생성
+1. 배열에 대한 래퍼런스 변수 선언
+```bash
+int intArray [];    // 배열 타입(int), 배열에 대한 레퍼런스 변수(intArray), 배열 선언([])
+```
+2. 배열 생성 - 배열 공간 할당
+```bash
+intArray = new int [5];   // 배열에 대한 레퍼런스 변수(intArray), 배열 생성(new int), 원소 개수([5])
+```
+
+## 배열 선언 및 생성 디테일
+- 배열은 선언과 생성의 두 단계 필요: ``선언과 동시``에 생성할 수 있음
+- 배열 선언 : 배열의 이름 선언(배열 래퍼런스 변수 선언)
+- int intArray []; 또는 int[] intArray;     int intArray [5]; // 크기 지정하면 오류 발생
+- 배열 생성 : 배열 공간 ``할당`` 받는 과정
+- intArray = new int[5]; 또는 int intArray[] = new int[5]; // 선언과 동시에 배열 생성
+- 배열 초기화 : 배열 생성과 값 ``초기화``
+- int intArray[] = {4, 3, 2, 1, 0}; //  5개의 정수 배열 생성 및 값 초기화
+- double doubleArray[] = {0.01, 0.02, 0.03, 0.04}; // 5개의 실수 배열 생성 및 값 초기화
+
+## 배열 인덱스와 배열 원소 접근
+- 배열의 인덱스는 0부터, 크기 1부터
+```bash
+int intArray = new int[5]; // 인덱스는 0~4까지 가능
+intArray[0] = 5;           // 원소 0에 5 저장
+intArray[3] = 6;           // 원소 3에 6 저장
+int n = intArray[3];       // 원소 3의 값을 읽어 n에 저장
+```
+- 인덱스를 잘못 사용한 경우
+```bash
+int n = intArray[-2];      // 인덱스로 음수 사용 불가
+int m = intArray[5];       // 5는 인덱스의 범위(0~4) 넘었음
+```
+- 반드시 배열 생성 후 접근
+```bash
+int intArray [];           // 레퍼런스만 선언 함
+intArray[1] = 8;           // 오류. 배열이 생성되어 있지 않음
+
+int intArray[] = new int[5];
+```
+## 레퍼런스 치환과 배열 공유
+- 자바에서는 배열 공간과 레퍼런스 변수가 분리되어 있어 생성된 배열에 대한 공유가 쉽게 이루어짐
+- 생성된 배열을 다수의 레퍼런스가 참조할 수 있음
+```bash
+int intArray[] = new int[5];
+int myArray[] = intArray; // 레퍼런스 치환. myArray는 intArray와 동일한 배열 참조
+```
+- 배열을 복사하여 새로운 배열을 만들어 myArray배열을 생성하는 것이 아닌, 레퍼런스만 복사 됨
+- myArray로 intArray의 배열 원소를 마음대로 접근할 수 있음
+
+---
+
+## 코드
+### Ex02_9.java
+```bash
+public class Ex02_9 {
+    public static void main(String[] args) {
+        int a = 3, b =5;
+
+        System.out.println("두 수의 차는 " + ((a>b)?(a-b):(b-a))); // a>b가 false 이므로 b-a 의 값 2가 나옴
+    }
+}
+```
+#### 결과
+```bash
+두 수의 차는 2
+```
+
+---
+
+### Ex2_14.java
+```bash
+import java.util.Scanner;
+public class Ex2_14 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("월(1~12)을 입력하시오:");
+        int month = scanner.nextInt();
+        switch(month){
+            case 3:
+            case 4:
+            case 5:
+                System.out.println("봄입니다.");
+                break;
+            case 6: case 7: case 8:
+                System.out.println("여름입니다.");
+                break;
+            case 9: case 10: case 11:
+                System.out.println("가을입니다.");
+                break;
+            case 12: case 1: case 2:
+                System.out.println("겨울입니다."); break;
+            default:
+                System.out.println("잘못된 입력입니다.");
+        }
+        scanner.close();
+    }
+}
+```
+#### 결과
+```bash
+월(1~12)을 입력하시오:3
+봄입니다.
+```
+
+---
+
+### Ex3_1.java
+```bash
+public class Ex3_1 {
+    public static void main(String[] args) {
+        int i, sum=0;
+        for(i=1; i<=10; i++) {
+            sum += 1;
+            System.out.print(i);
+            if(i<=9)
+                System.out.print("+");
+            else {
+                System.out.print("=");
+                System.out.print(sum);
+            }
+        }
+    }
+}
+```
+#### 결과
+```bash
+1+2+3+4+5+6+7+8+9+10=10
+```
+
+---
+
+### Ex3_4_1.java
+```bash
+public class Ex3_4_1 {
+    public static void main(String[] args) {
+        for(int i=2; i<10; i++) {
+            System.out.println("[" + i + "단]");
+            for(int j=1; j<10; j++) {
+                System.out.println(i + "*" + j + "=" + i*j);
+            }
+            System.out.println();
+        }
+    }
+}
+```
+#### 결과
+```bash
+[2단]
+2*1=2
+2*2=4
+2*3=6
+2*4=8
+2*5=10
+2*6=12
+2*7=14
+2*8=16
+2*9=18
+
+[3단]
+3*1=3
+3*2=6
+3*3=9
+3*4=12
+3*5=15
+3*6=18
+3*7=21
+3*8=24
+3*9=27
+
+... 생략
+
+[9단]
+9*1=9
+9*2=18
+9*3=27
+9*4=36
+9*5=45
+9*6=54
+9*7=63
+9*8=72
+9*9=81
+```
+---
+
+### Ex3_4_2.java
+```bash
+public class Ex3_4_2 {
+    public static void main(String[] args) {
+        System.out.println("[ 2단 ]\t[ 3단 ]\t[ 4단 ]\t[ 5단 ]\t[ 6단 ]\t[ 7단 ]\t[ 8단 ]\t[ 9단 ]");
+        for(int j=1; j<10; j++) {
+            for(int i=2; i<10; i++) {
+                System.out.print(i + "X" + j + "=" + (i*j));    // i가 1씩 먼저 늘고 계산 다 되면 j 하나 늘기
+                System.out.print('\t');
+            }
+            System.out.println();
+            
+        }
+    }
+}
+```
+#### 결과
+```bash
+[ 2단 ] [ 3단 ] [ 4단 ] [ 5단 ] [ 6단 ] [ 7단 ] [ 8단 ] [ 9단 ]
+2X1=2   3X1=3   4X1=4   5X1=5   6X1=6   7X1=7   8X1=8   9X1=9
+2X2=4   3X2=6   4X2=8   5X2=10  6X2=12  7X2=14  8X2=16  9X2=18
+2X3=6   3X3=9   4X3=12  5X3=15  6X3=18  7X3=21  8X3=24  9X3=27
+2X4=8   3X4=12  4X4=16  5X4=20  6X4=24  7X4=28  8X4=32  9X4=36
+2X5=10  3X5=15  4X5=20  5X5=25  6X5=30  7X5=35  8X5=40  9X5=45
+2X6=12  3X6=18  4X6=24  5X6=30  6X6=36  7X6=42  8X6=48  9X6=54
+2X7=14  3X7=21  4X7=28  5X7=35  6X7=42  7X7=49  8X7=56  9X7=63
+2X8=16  3X8=24  4X8=32  5X8=40  6X8=48  7X8=56  8X8=64  9X8=72
+2X9=18  3X9=27  4X9=36  5X9=45  6X9=54  7X9=63  8X9=72  9X9=81
+```
+
+---
+
+### Ex3_4.java
+```bash
+public class Ex3_4 {
+    public static void main(String[] args) {
+        for(int i=1; i<10; i++){
+            for(int j=1; j<10; j++){
+                System.out.print(i + "*" + j + "=" + i*j);
+                System.out.print('\t');
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+#### 결과
+```bash
+2*1=2   2*2=4   2*3=6   2*4=8   2*5=10  2*6=12  2*7=14  2*8=16  2*9=18
+3*1=3   3*2=6   3*3=9   3*4=12  3*5=15  3*6=18  3*7=21  3*8=24  3*9=27
+4*1=4   4*2=8   4*3=12  4*4=16  4*5=20  4*6=24  4*7=28  4*8=32  4*9=36
+5*1=5   5*2=10  5*3=15  5*4=20  5*5=25  5*6=30  5*7=35  5*8=40  5*9=45
+6*1=6   6*2=12  6*3=18  6*4=24  6*5=30  6*6=36  6*7=42  6*8=48  6*9=54
+7*1=7   7*2=14  7*3=21  7*4=28  7*5=35  7*6=42  7*7=49  7*8=56  7*9=63
+8*1=8   8*2=16  8*3=24  8*4=32  8*5=40  8*6=48  8*7=56  8*8=64  8*9=72
+9*1=9   9*2=18  9*3=27  9*4=36  9*5=45  9*6=54  9*7=63  9*8=72  9*9=81
+```
+
+---
+
+### Ex3_5.java
+```bash
+import java.util.Scanner;
+public class Ex3_5 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("정수를 5개 입력하세요.");
+        int sum=0;
+        for(int i=0; i<5; i++) {
+            int n=scanner.nextInt();
+            if(n<=0) continue;
+            else sum += n;
+
+        }
+        System.out.println("양수의 합은 " + sum);
+
+        scanner.close();
+    }
+}
+```
+
+#### 결과
+```bash
+정수를 5개 입력하세요.
+2 3 4 5 6
+양수의 합은 20
+```
+
+---
+
+### Ex3_7.java
+```bash
+import java.util.Scanner;
+public class Ex3_7 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int intArray[];
+        intArray = new int[5];
+        int max=0;
+        System.out.println("양수 5개를 입력하세요.");
+        for(int i=0; i < 5; i++) {
+            intArray[i] = scanner.nextInt();
+            if(intArray[i] > max) {
+                max = intArray[i];
+            }
+
+        }
+    System.out.print("가장 큰 수는 " + max + "입니다.");
+
+    scanner.close();
+    }
+}
+```
+
+#### 결과
+```bash
+양수 5개를 입력하세요.
+2 6 4 7 8
+가장 큰 수는 8입니다.
+```
+
+---
+
+### Ex3_10.java
+```bash
+import java.util.Scanner;
+public class Ex3_10 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("점수를 입력하세요(0~100):");
+        int score = scanner.nextInt();
+        System.out.print("학년을 입력하세요(1~4):");
+        int year = scanner.nextInt();
+
+        if(score >= 60) {
+            if(year != 4)
+                System.out.println("합격!");
+            else if(score >= 70)
+                System.out.println("합격!");
+            else
+                System.out.println("불합격!");
+        }
+        else
+            System.out.println("불합격!");
+
+        scanner.close();
+    }
+}
+```
+#### 결과
+```bash
+점수를 입력하세요(0~100):69
+학년을 입력하세요(1~4):3
+합격!
+```
+
+---
