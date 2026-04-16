@@ -2,6 +2,361 @@
 # JAVA2
 
 ---
+## 7주차 2026/04/15
+
+## 객체 생성과 활용
+1. 레퍼런스 변수 선언
+```bash
+Circle pizza;
+```
+2. 객체 생성
+- new 연산자 이용
+
+```bash
+pizza = new Circle();
+```
+
+3. 객체 멤버 접근
+- 점(.) 연산자 이용
+
+```bash
+pizza.radius = 10;
+area = pizza.getArea();
+```
+
+---
+
+## 생성자의 특징
+- 생성자 이름은 ``클래스 이름과 동일``
+- 생성자는 여러 개 작성 가능(생성자 중복)
+```bash
+public class Circle{
+    public Circle() {...} // 매개 변수 없는 생성자
+    public Circle(int r, String n) {...} // 2개의 매개 변수를 가진 생성자
+}
+```
+
+- 생성자는 객체 생성시 한 번만 호출
+    - 자바에서 객체 생성은 반드시 ``new`` 연산자로 함
+```bash
+Circle pizza = new Circle(10, "자바피자"); // 생성자 Circle(int r, String n) 호출
+Circle donut = new Circle(); // 생성자 Circle() 호출
+```
+- 생성자의 목적은 객체 생성 시 ``초기화``
+- 생성자는 리턴 타입을 지정할 수 없음
+
+---
+
+## 생성자의 종류
+- 기본 생성자(default constructor) : ``매개 변수 없고``, 아무 작업 없이 단순 ``리턴``하는 생성자
+```bash
+class Circle() {
+    public Circle() { } // 기본 생성자
+}
+```
+- 기본 생성자가 자동 생성되는 경우
+    - 클래스에 생성자가 하나도 ``선언되어 있지 않을 때``
+    - 컴파일러에 의해 기본 생성자 자동 생성
+
+- 기본 생성자가 자동 생성되지 않는 경우
+    - 클래스에 생성자가 ``선언되어`` 있는 경우
+    - 컴파일러는 기본 생성자를 자동 생성해 주지 않음
+
+---
+
+## this 레퍼런스
+- 객체 자신에 대한 레퍼런스
+- 컴파일러에 의해 자동 관리, 개발자는 사용하기만 하면 됨
+- ``this.멤버`` 형태로 멤버를 접근할 때 사용
+
+## this()로 다른 생성자 호출
+- 같은 클래스의 다른 생성자 호출
+- ``생성자 내``에서만 사용 가능
+- ``생성자 코드의 제일 앞``에 있어야 함
+
+---
+
+## 객체 배열
+- 객체에 대한 레퍼런스 배열
+- 자바의 객체 배열 생성
+1. 배열 레퍼런스 ``배열 선언``
+2. 레퍼런스 ``배열 생성``
+3. 배열의 각 원소 ``객체 생성``
+
+```bash
+Circle [] c; // 1. Circle배열에 대한 레퍼런스 변수 c 선언
+c = new Circle[5]; // 2. 레퍼런스 배열 생성
+
+for(int i=0; i<c.length; i++) // c.length는 배열 c의 크기로서 5
+    c[i] = new Circle(i); // 3.각 원소 객체 생성
+
+for(int i=0; i<c.length; i++)
+    System.out.println((int)(c[i].getArea()) + " "); // 배열의 원소 객체 사용
+```
+
+---
+
+## 메소드
+- 자바의 모든 메소드는 반드시 ``클래스 안에`` 있어야함(캡슐화 원칙)
+```bash
+public int getSum(int i, int k) { // public: 접근 지정자, int: 리턴 타입, getSum: 메소드 이름, (int i, int j): 메소드 인자들
+    int sum;
+    sum = i + j;
+    return sum;
+}
+```
+- 접근 지정자 : 다른 클래스에서 ``메소드를 접근할 수 있는지`` 여부 선언
+    - public, private, protected, 디폴트(접근 지정자 생략)
+- 리턴 타입 : 메소드가 ``리턴하는 값의 데이터 타입``
+
+### 1. 인자 전달 - 기본 타입의 값이 전달되는 경우
+- 매개 변수가 byte, int, double, 등 ``기본 타입``으로 선언되었을 때
+    - 호출자가 건네는 값이 매개 변수에 ``복사되어 전달, 실 인자 값은 변경 안 됨``
+
+### 2. 인자 전달 - 객체가 전달되는 경우
+- 객체의 레퍼런스만 전달 : 매개 변수가 ``실 인자 객체 공유``
+
+### 3. 인자 전달 - 배열이 전달되는 경우
+- 배열 레퍼런스만 매개 변수에 전달 : ``배열 통째로 전달되지 않음``
+- 객체가 전달되는 경우와 동일 : 매개 변수가 ``실 인자의 배열 공유``
+
+---
+
+## 메소드 오버로딩(Overloading)
+- 한 클래스 내에서 ``두 개 이상``의 ``이름이 같은 메소드`` 작성
+- 메소드 ``이름이 동일``해야 함
+- 매개 변수의 ``개수 혹은 타입``이 달라야 함
+- 리턴 타입은 오버로딩과 관련 없음
+
+## 객체 치환 시 주의할 점
+- 객체 치환은 객체 복사가 아니며, 레퍼런스의 복사
+```bash
+Samp ob1 = new Samp(3);
+Samp ob2 = new Samp(4);
+
+s = ob2; // 객체 치환, s는 ob2의 객체를 가리킴
+
+ob1 = ob2; // 객체 치환, ob1은 ob2의 객체를 가리키게 됨
+```
+
+---
+
+## 객체 소멸
+- new로 ``할당 받은 객체와 메모리를 JVM으로 되돌려 주는 행위``
+- 자바는 ``객체 소멸 연산자 없음``
+- 객체 소멸은 JVM의 고유한 역할
+- C/C++에서는 할당 받은 객체를 개발자가 프로그램 내에서 삭제해야 함
+- C/C++의 프로그램 작성을 어렵게 만드는 요인
+- 자바에서는 사용하지 않는 객체나 배열을 돌려주는 코딩 책임으로부터 개발자 해방
+
+---
+
+## 가비지
+- ``가리키는 레퍼런스가 하나도 없는 객체``
+- 더 이상 접근할 수 없어 사용할 수 없게 된 메모리
+- ``가비지 컬렉션`` : 자바 가상 기계의 가비지 컬렉터가 ``자동으로 가비지 수집, 반환``
+
+```bash
+Person a, b;
+a = new Person("이몽룡");
+b = new Person("성춘향");
+
+b = a; // b가 가리키던 객체는 가비지가 됨
+```
+
+## 가비지 컬렉션(garbage collection)
+- JVM이 가비지 자동 회수
+    - 가용 메모리 공간이 일정 이하로 부족해질 때
+    - 가비지를 수거하여 가용 메모리 공간으로 확보
+- ``가비지 컬렉터(garbage collector)``에 의해 자동 수행
+- 강제 가비지 컬렉션 강제 수행 : System 또는 Runtime 객체의 gc() 메소드 호출
+```bash
+System.gc(); // 가비지 컬렉션 작동 요청
+```
+- 이 코드는 JVM에 ``강력한 가비지 컬렉션 요청``
+- 그러나 ``JVM이 가비지 컬렉션 시점을 전적으로 판단``
+
+---
+
+## 자바의 패키지 개념
+- 상호 관련 있는 클래스 파일(컴파일된 .class)을 저장하여 관리하는 디렉터리
+- 자바 응용프로그램은 하나 이상의 패키지로 구성
+
+---
+
+## 접근 지정자
+- 자바의 접근 지정자 4가지 : ``private, protected, public, 디폴트(접근 지정자 생략)``
+- 접근 지정자의 목적
+    - 클래스나 일부 멤버를 공개하여 ``다른 클래스에서 접근하도록 허용``
+    - 객체 지향 언어의 캡슐화 정책은 ``멤버를 보호하는 것``
+        - 접근 지정은 ``캡슐화에 묶인 보호를 일부 해제할 목적``으로 사용
+
+---
+
+## 클래스 접근 지정
+- 다른 클래스에서 사용하도록 허용할 지 지정
+- public 클래스 : 다른 ``모든 클래스``에게 접근 허용
+- 디폴트 클래스(접근 지정자 생략) : ``같은 패키지의 클래스에``만 접근 허용
+```bash
+public class World { // public 클래스
+................
+}
+class local { // 디폴트 클래스
+............
+}
+```
+
+---
+
+## 멤버 접근 지정
+- public 멤버 : 패키지에 관계 없이 ``모든 클래스``에게 접근 허용
+- private 멤버 : ``동일 클래스 내``에만 접근 허용, ``상속 받은 서브 클래스에서 접근 불가``
+- protected 멤버: ``같은 패키지 내``의 다른 모든 클래스에게 접근 허용
+    - ``상속 받은 서브 클래스는 다른 패키지에 있어도 접근 가능``
+- 디폴트(default) 멤버 : ``같은 패키지 내``의 ``다른 클래스``에게 접근 허용
+
+---
+
+## static 멤버
+- static 멤버 선언
+```bash
+class StaticSample {
+    int n;          // non-static 필드
+    void g() {...}  // non-static 메소드
+    
+    static int m;   // static 필드
+    static void f() {...} // static 메소드
+}
+```
+
+- 객체 생성과 non-static 멤버의 생성
+    - non-static 멤버는 ``객체가 생성될 때, 객체마다 생김``
+- 객체마다 n, g()의 non-static 멤버들이 생김
+
+## static 멤버의 생성
+- static 멤버는 클래스당 하나만 생성
+- 객체들에 의해 공유됨
+
+## static 멤버 사용
+- 클래스 이름으로 접근 가능
+```bash
+StaticSample.m = 3;     // 클래스 이름으로 static 필드 접근
+StaticSample.f();       // 클래스 이름으로 static 메소드 호출
+```
+- 객체의 멤버로 접근 가능
+```bash
+StaticSample b1 = new StaticSample();
+
+b1.m = 3;   // 객체 이름으로 static 필드 접근
+b1.f();     // 객체 이름으로 static 메소드 호출
+```
+- non-static 멤버는 클래스 이름으로 접근 안됨
+```bash
+StaticSample.n = 5; // n은 non-static이므로 컴파일 오류
+StaticSample.g();   // g()는 non-static이므로 컴파일 오류
+```
+
+## static의 활용
+- 전역 변수와 전역 함수를 만들 때 사용
+- 공유 멤버를 만들 때 : static으로 선언한 멤버는 클래스의 객체들 사이에 공유
+
+## static 메소드의 제약 조건 1
+- static 메소드는 오직 static 멤버만 접근 가능
+    - 객체가 생성되지 않은 상황에서도 static 메소드는 실행될 수 있기 때문에, ``non-static 멤버 활용 불가``
+    - non-static 메소드는 ``static 멤버 사용 가능``
+
+## static 메소드의 제약 조건 2
+- static 메소드는 ``this 사용불가``
+- static 메소는 객체 없이도 사용 가능하므로, ``this 레퍼런스 사용할 수 없음``
+
+---
+
+## final 클래스와 메소드
+- final 클래스
+    - 더 이상 클래스 상속 불가능
+    - 더이상 오버라이딩 불가능
+
+## final 필드
+- final 필드
+    - 상수를 선언할 때 사용
+- 상수 필드는 선언 시에 ``초기 값을 지정``하여야 함
+- 상수 필드는 실행 중에 ``값을 변경 할 수 없음``
+
+---
+### 코드
+### Ex4_1.java
+
+```bash
+public class Ex4_1 {
+    int radius;     // 원의 반지름 필드
+    String name;    // 원의 이름 필드
+
+    public double getArea() { // 멤버 메소드
+        return 3.14*radius*radius;    
+    }
+
+    public static void main(String[] args) {
+        Ex4_1 pizza; // 객체에 대한 레퍼런스 변수 pizza 선언
+        pizza = new Ex4_1(); // Ex4_1 객체 생성
+        pizza.radius = 10; // 피자의 반지름을 10으로 설정
+        pizza.name = "자바피자"; // 피자의 이름 설정
+        double area = pizza.getArea(); // 피자 면적 알아내기
+        System.out.println(pizza.name + "의 면적은 " + area);
+
+        Ex4_1 donut = new Ex4_1(); // Ex4_1 객체 생성
+        donut.radius = 2; // 도넛의 반지름을 2로 설정
+        donut.name = "자바도넛"; // 도넛의 이름 설정
+        area = donut.getArea(); // 도넛의 면적 알아내기
+        System.out.println(donut.name + "의 면적은 " + area);
+    }
+}
+```
+#### 결과
+```bash
+자바피자의 면적은 314.0
+자바도넛의 면적은 12.56
+```
+
+### Ex4_6_CircleArray.java
+```bash
+class Circle {
+    int radius;     
+
+    public Circle(int radius) {
+        this.radius = radius;
+    }
+
+    public double getArea() { 
+        return 3.14*radius*radius;    
+    }
+}
+
+public class Ex4_6_CircleArray {
+    public static void main(String[] args) {
+        Circle [] c; // Circle 배열에 대한 레퍼런스 c 선언
+        c = new Circle[5]; // 5개의 레퍼런스 배열 생성
+
+        for (int i = 0; i < c.length; i++) // 배열의 개수 만큼
+            c[i] = new Circle(i); // i 번째 원소 객체 생성
+
+        for (int i = 0; i < c.length; i++) // 배열의 모든 Circle 객체의 면적 출력
+            System.out.println((int) (c[i].getArea()) + " ");
+    }
+}
+```
+
+#### 결과 
+```bash
+0
+3
+12
+28
+50
+```
+
+
+---
+---
 
 ## 6주차 2026/04/08
 ## 배열의 크기, length필드
