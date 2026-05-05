@@ -2,6 +2,113 @@
 # JAVA2
 
 ---
+
+## 9주차 2026/04/29
+## 상속의 장점
+- 클래스 사이의 멤버 중복 선언 불필요
+    - 클래스의 간결화
+- 클래스들의 계층적 분류로 클래스 관리 용이
+- 클래스 재사용과 확장을 통한 소프트웨어의 생산성 향상
+
+## 자바의 상속 선언
+- 상속하는 클래스를 ``슈퍼 클래스``라고 함
+- 상속 받는 자식 클래스를 ``서브 클래스`` 라고 함
+
+## 자바 상속의 특징
+- 클래스 ``다중 상속`` 불허
+- 자바의 모든 클래스는 자바에서 제공하는 Object 클래스를 자동으로 상속받도록 컴파일 됨
+    - 유일하게 슈퍼 클래스를 가지지 않는 클래스
+
+## 서브 클래스와 슈퍼 클래스의 생성자 선택
+- 슈퍼 클래스와 서브 클래스 : 각각 ``여러 개의 생성자`` 작성 가능
+- 서브 클래스의 객체가 생성 될 때 : 슈퍼 클래스 생성자 1개와 서브 클래스 생성자 1개가 실행
+- 슈퍼 클래스의 생성자가 먼저 실행 됨
+
+
+## 업캐스팅
+- 서브 클래스는 슈퍼 클래스의 속성을 ``상속``받음
+- 서브 클래스는 슈퍼클래스로 ``취급`` 될 수 있음
+- 서브 클래스 객체가 슈퍼 클래스 타입으로 변환되는 것을 ``업캐스팅`이라고 함
+```bash
+Person p;
+Student s = new Student();
+p = s; // 업캐스팅
+```
+- 업캐스팅한 레퍼런스로는 객체 내에 실존하는 모든 데이터를 접근 할 수 없고 ``슈퍼 클래스의 멤버``만 접근 할 수 있음
+- ``명시적 타입 변환``을 하지 않아도 됨
+```bash
+p = (Person)s; // (Person)을 생략하고, p = s; 로 해도 됨
+```
+
+## 다운캐스팅
+- 슈퍼 클래스 레퍼런스를 서브 클래스 레퍼런스에 대입
+- 업캐스팅 된 것을 다시 ``원래대로 되돌리는 것``
+- 반드시 ``명시적 타입 변환 지정``
+```bash
+Person p = new Student("이재문"); // 업캐스팅
+Student s = (Student)p; // 다운캐스팅, (Student)의 타입 변환을 반드시 지정
+```
+
+## 메소드 오버라이딩의 개념
+- 서브 클래스에서 슈퍼 클래스의 메소드 ``중복`` 작성
+- ``슈퍼 클래스의 메소드 무력화``, 항상 서브 클래스에 ``오버라이딩한 메소드``가 실행되도록 보장
+- 서브 클래스에 오버라이딩한 메소드는 반드시 슈퍼 클래스에 작성된 메소드의 ``이름, 리턴 타입, 매개 변수 리스트가 모두 같도록 작성``되어야 함
+
+## 오버라이딩의 목적, 다형성 실현
+- 오버라이딩으로 ``다형성`` 실현
+- 하나의 ``인터페이스(같은 이름)``에 서로 다른 구현
+- 슈퍼 클래스의 메소드를 서브 클래스에서 각각 목적에 맞게 다르게 구현
+
+### Ex51ColorPointEx.java
+```bash
+    public static void main(String[] args) {
+        Point p = new Point(); // Point 객체 생성
+        p.set(1, 2); // Point 클래스의 set() 호출
+        p.showPoint();
+
+        ColorPoint cp = new ColorPoint();
+        cp.set(3, 4); // Point 클래스의 set() 호출
+        cp.setColor("red"); // ColorPoint의 setColor() 호출
+        cp.showColorPoint(); // 컬러의 좌표 출력
+    }
+}
+
+
+class Point {
+    private int x, y; // 한 점을 구성하는 x, y 좌표
+    public void set(int x, int y) {
+        this.x = x; this.y = y;
+    }
+    public void showPoint() { // 점의 좌표 출력
+        System.out.println("(" + x + "," + y + ")");
+    }
+}
+
+
+class ColorPoint extends Point { // Point를 상속받은 ColorPoint 선언
+    private String color; // 점의 색
+    public void setColor(String color) {
+        this.color = color;
+
+    }
+    public void showColorPoint() { // 컬러 점의 좌표 출력
+        System.out.print(color);
+    showPoint(); // Point 클래스의 showPoint() 호출
+    }
+}
+
+```
+
+#### 결과
+```bash
+(1,2)
+red(3,4)
+```
+
+
+---
+---
+
 ## 7주차 2026/04/15
 
 ## 객체 생성과 활용
