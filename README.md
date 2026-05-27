@@ -2,6 +2,194 @@
 # JAVA2
 
 ---
+## 13주차 2026/05/27
+## Key 이벤트와 포커스
+- 키 입력시, 다음 세 경우 각각 Key 이벤트 발생
+    - ``키를 누르는 순간``
+    - ``누른 키를 떼는 순간``
+    - ``누른 키를 떼는 순간``(Unicode키의 경우에만)
+- 키 이벤트를 받을 수 있는 조건
+    - 모든 컴포넌트
+    - 현재 컴포넌트를 가진 컴포넌트에만 ``Key 이벤트`` 발생
+
+
+## 유니코드 키
+- 유니코드 키의 특징
+    - 국제 산업 표준
+    - 전 세계의 문자를 컴퓨터에서 일관되게 표현하기 위한 코드 체계
+    - 문자들에 대해서만 키 코드 값 정의 : ``A~Z, a~z, 0~9, ! ,@, &, <> 등``
+
+
+## 가상 키와 입력된 키 판별
+- KeyEvent 객체
+    - 입력된 키 정보를 가진 이벤트 객체
+    - ``KeyEvent 객체의 메소드``로 입력된 키 판별
+- KeyEvent 객체의 메소드로 입력된 키 판별
+    - char KeyEvent.getKeyChar()
+    - 키의 유니코드 문자 값 리턴
+    -`` Unicode 문자 키``인 경우에만 의미 있음
+    - 입력된 키를 판별하기 위해 문자 값과 비교
+
+- int KeyEvent.getKeyCode()
+    - 유니코드 키 포함
+    - ``모든 키에 대한 정수형 키 코드 리턴``
+    - 입력된 키를 판별하기 위해 ``가상키 값과 비교``
+    - 가상 키 값은 KeyEvent 클래스에 상수로 선언
+
+---
+
+## Mouse 이벤트와 MouseListener, MouseMotionListener
+- Mouse 이벤트 : 사용자의 마우스 조작에 따라 발생하는 이벤트
+    - mouseClicked() : 마우스가 눌러진 위치에서 ``그대로 떼어질 때 호출``
+    - mouseReleased() : 마우스가 눌러진 위치에서 ``그대로 떼어지든 아니든 항상 호출``
+    - mouseDragged() : 마우스가 드래그되는 동안 ``계속 여러번 호출``
+
+---   
+
+## 자바의 GUI 프로그래밍 방법
+- 컴포넌트 기반 GUI 프로그래밍
+    - ``스윙 컴포넌트``를 이용하여 쉽게 GUI를 구축
+    - 자바에서 제공하는 ``컴포넌트의 한계``를 벗어나지 못함
+- 그래픽을 이용하여 GUI 구축
+    - ``그래픽 기반`` GUI 프로그래밍
+    - 개발자가 직접 ``그래픽으로 화면을 구성한느 부담``
+    - 독특한 GUI를 구성할 수 있는 장점
+    - GUI 처리의 ``실행 속도가 빨라, 게임 등에 주로 이용``
+
+---
+
+## 스윙 컴포넌트의 공통 메소드, JComponent의 메소드
+- JComponent
+    - 스윙 컴포넌트의 멤버를 ``모두 상속받는`` 슈퍼 클래스, 추상 클래스
+    - 스윙 컴포넌트들이 상속받는 공통 메소드와 상수 구현
+
+---
+
+### MouseAdapterEx.java 
+```bash
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class MouseAdapterEx extends JFrame {
+    private JLabel la = new JLabel("Hello");
+    
+    public MouseAdapterEx() {
+        setTitle("Mouse 이벤트 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.addMouseListener(new MyMouseAdapter());
+
+        c.setLayout(null);
+        la.setSize(50, 20);
+        la.setLocation(30, 30);
+        c.add(la);
+        
+        setSize(200, 200);
+        setVisible(true);
+    }
+
+    class MyMouseAdapter extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            la.setLocation(x, y);
+        }
+    }
+
+    public static void main(String [] args) {
+        new MouseAdapterEx();
+        
+    }
+}
+```
+---
+
+## Ex821ContentPaneEx.java
+```bash
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Ex821ContentPaneEx extends JFrame {
+    public Ex821ContentPaneEx() {
+        super("JComponent의 공통 메소드 예제");
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        JButton b1 = new JButton("Magenta/Yellow Button");
+        JButton b2 = new JButton(" Disabled Button ");
+        JButton b3 = new JButton("getX(), getY()");
+        b1.setBackground(Color.YELLOW);
+        b1.setForeground(Color.MAGENTA);
+        b1.setFont(new Font("Arial", Font.ITALIC, 20));
+        b2.setEnabled(false);
+        b3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JButton b = (JButton) e.getSource();
+                setTitle(b.getX() + "," + b.getY());
+            }
+        });
+        c.add(b1);
+        c.add(b2);
+        c.add(b3);
+        setSize(260, 200);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new Ex821ContentPaneEx();
+    }
+    
+}
+```
+
+---
+
+### KeyCharEx.java
+```bash
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class KeyCharEx extends JFrame {
+    private JLabel la = new JLabel("<Enter>키로 배경색이 바뀝니다");
+    public KeyCharEx() {
+        super("KeyListener의 문자 키 입력 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        c.add(la);
+        c.addKeyListener(new MyKeyListener());
+        setSize(250, 150);
+        setVisible(true);
+
+        c.setFocusable(true);
+        c.requestFocus();
+    }
+
+    class MyKeyListener extends KeyAdapter {
+        public void KeyPressed(KeyEvent e) {
+            int r = (int) (Math.random() * 256);
+            int g = (int) (Math.random() * 256);
+            int b = (int) (Math.random() * 256);
+            switch(e.getKeyChar()) {
+                case '\n' :
+                    la.setText("r=" + r + ", g=" + g + ", b=" + b);
+                    getContentPane().setBackground(new Color (r, g, b));
+
+                    break;
+                case 'q' : System.exit(0);
+                }
+            }
+        }
+        public static void main(String[] args) {
+            new KeyCharEx();
+    }
+}
+```
+
+---
+---
 
 ## 12주차 2026/05/20
 ## 이벤트 기반 프로그래밍
@@ -74,7 +262,7 @@
     - 간단한 리스너의 경우 ``익명 클래스 사용`` 추천
     - 메소드의 개수가 ``1, 2개``인 리스너에 대해 주로 사용
 
-### 코드
+### IndepClassListener.java
 ```bash
 import java.awt.*;
 import java.awt.event.*;
